@@ -12,6 +12,8 @@ export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     // destructurere pageProps, så det kun er pagePropsne defineret inde i const
     const { isLanding, isSchedule, isProgram } = pageProps;
+    //svarer til at vi her sætter en div omkirng indholdet på en hel side.
+    // det er dynamisk fordi vi skifter badyclass ud alt efter pageprops. 
 
     if (isLanding) {
       document.body.className = "landing-background";
@@ -29,9 +31,9 @@ export default function MyApp({ Component, pageProps }) {
     <>
       {/* Render Navigation på alle andre sider end BookingDisplay */}
       {!isBookingDisplayPage && <Navigation />}
-
       <FormDataProvider>
         <Component {...pageProps} />;
+           {/*/... pageprops splitter pageprops i de 3 props.*/}
       </FormDataProvider>
       <Footer />
     </>

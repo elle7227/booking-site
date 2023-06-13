@@ -8,6 +8,7 @@ import Link from "next/link";
 import NavigationBooking from "@/components/NavigationBooking";
 import Head from "next/head";
 
+//henter data fra available spots og sender med den i booking display component.
 export async function getServerSideProps() {
   const api = "https://nova-enchanted-confidence.glitch.me/available-spots";
   const res = await fetch(api);
@@ -20,10 +21,15 @@ export async function getServerSideProps() {
   };
 }
 
+
 export default function BookingDisplay({ data }) {
   //provide the context to the component
   const { formState, dispatch } = useContext(formDataContext);
+  
+  // en stater der holder styr på hvilke step i flowet du er på, staten bruges til at vælge component der skal vises.
   const [currentStep, setCurrentStep] = useState(0);
+
+  //kig efter hvilke step du er på, og derudfra vis/switch til denne component.
   switch (currentStep) {
     case 1:
       return <PersonalInfo currentStepSetter={setCurrentStep} />;
