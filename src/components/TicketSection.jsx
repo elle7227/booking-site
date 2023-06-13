@@ -4,7 +4,7 @@ import styles from "../styles/Form.module.css";
 import { formDataContext } from "@/contexts/bookingContext";
 
 export default function TicketsSection() {
-  //context call for the child component
+  //fortæller at vi skal bruge usetext - context call for the child component
   const { formData, dispatch } = useContext(formDataContext);
 
   return (
@@ -16,11 +16,16 @@ export default function TicketsSection() {
         helperText="Choose a date"
         value={formData.date}
         required
+        //vi registrere en ændring i globalt objekt med dispatch, som opdateres det globale objekt og returnere den nye state
         onChange={(e) =>
           dispatch({
             //dispatch to the global formData obj. with new state value
+            //vi har en case der hedder update fiels i context som reurnerer
             action: "UPDATE_FIELD",
+            //vi har med "date" field at gøre, og vi skal opdaterer til den nye væærdi
             payload: { field: "date", value: e.target.value },
+            // i context filen har vi denne sætning. [action.payload.field]: action.payload.value som så forholder sig til field 
+            //"date" og returnere den nye værdi som indtastes i field.
           })
         }
       />

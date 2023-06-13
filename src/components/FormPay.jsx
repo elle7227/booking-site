@@ -21,6 +21,7 @@ export default function FormPay({ currentStepSetter }) {
   /* CONFIRM RESERVATION */
   function confirmReservation(e) {
     e.preventDefault();
+    //definerer objekt som indeholder alt i global state.
     const payload = {
       Date: formData.formData.date,
       ticketType: formData.formData.ticketType,
@@ -36,7 +37,7 @@ export default function FormPay({ currentStepSetter }) {
       ticketPrice: formData.formData.ticketPrice,
     };
 
-    /* Fetcher fra api "confirm-order" */
+    /* Fetcher fra api "confirm-order" som er et mellemled der indeholder kode som forbinde til vores database */
     fetch("/api/confirm-order", {
       method: "post",
       headers: {

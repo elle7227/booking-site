@@ -21,11 +21,11 @@ export async function getServerSideProps() {
   };
 }
 
-
+  //fordi denne side er parent til alle child skal denn kende alt 
 export default function BookingDisplay({ data }) {
-  //provide the context to the component
+  //2 konstanter der kommer fra formDataContext
   const { formState, dispatch } = useContext(formDataContext);
-  
+
   // en stater der holder styr på hvilke step i flowet du er på, staten bruges til at vælge component der skal vises.
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -39,13 +39,16 @@ export default function BookingDisplay({ data }) {
       return <Confirmation />;
     default:
       return (
+        //når staten currentStep er 0, som den er sat til fra start vises dette som er defaulten.
         <>
           <Head>
             <title>Booking</title>
           </Head>
           <NavigationBooking />
           <MainTicket
+          //denne data skal bruges i child komponenter og derfor sendes det med ned
             currentStepSetter={setCurrentStep}
+            //formdataContext skrives blot som formData og indeholder formState og dispatch ligesom formdataContext.
             formData={{ formState, dispatch }}
             spotData={data}
           />

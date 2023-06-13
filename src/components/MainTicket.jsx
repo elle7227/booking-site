@@ -7,16 +7,21 @@ import AvailableSpotsSection from "./AvailableSpots";
 import TicketsSection from "./TicketSection";
 import { formDataContext } from "@/contexts/bookingContext";
 
+//!!!!mainTicket komponent er hele layout for den første side man ser på booking!!!!
+
+
 export default function MainTicket({ spotData, currentStepSetter }) {
+  //state til at pbne og lukke en lille infoboks ved tent set up
   const [open, setOpen] = useState(false);
 
-  //context call on the parent
+  //fortæller at vi skal bruge useContext (vores context) - context call on the parent
   const { formData, dispatch } = useContext(formDataContext);
 
   const handleInfoClick = () => {
     setOpen(!open);
   };
 
+  //vi får adgang til api - vores endpoint - fetch, som vi kan sende via `put` metoden sted og antal billetter.
   function reserveSpot(e) {
     e.preventDefault();
     fetch("https://nova-enchanted-confidence.glitch.me/reserve-spot", {
@@ -29,6 +34,8 @@ export default function MainTicket({ spotData, currentStepSetter }) {
         amount: formData.formData.ticketAmount,
       }),
     })
+    //som response på det vi smider op får vi et id på en reservation tilhørende det globale objekt.
+    //i vores database vil der ligge et id med tilhørende sted og antal tickets.
       .then((response) => response.json())
       .then((data) => {
         console.log(data.id);

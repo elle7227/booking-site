@@ -6,12 +6,16 @@ export const UpdateFormContext = createContext();
 
 //useReducer to manage complex states in ticketContext
 //global object expanded with inspiration  from https://github.com/Robert-d-s/foofest-app/blob/tereattendees/src/components/BookingForm.js
+
+//initialstate er et globalt objekt (kan bruges på alle sider) der gemmer al den data bruger indtaster som vi vil gemmer
+//inde i vores globale objekt opretter vi formdata som er en property med et oobjekt der indeholde al data.
 const initialState = {
   formData: {
     date: "",
     ticketType: "",
     ticketAmount: 0,
     area: "",
+    //vi laver array af objekter til antal personer og personers data. dett opdateres af field kaldet ticket amount.
     attendees: [
       {
         fullname: "",
@@ -31,17 +35,22 @@ const initialState = {
 };
 
 //purpose of reducers returns the next state
+// kigger efter parametre, og opdaterer staten. bryder en meget komoliceret state ned og kunne ændre mindre ting.
 function reducer(state, action) {
   console.log(action);
   switch (action.action) {
     case "UPDATE_FIELD":
       return {
+        //bryder dataen ned med ... til hver lille state der findes i dataen
         ...state,
         formData: {
           ...state.formData,
+          //læser feltet og opdatere værdien dynamisk. field og value skal defineres i 
           [action.payload.field]: action.payload.value,
         },
       };
+      //PAYLOAD er den data der modtages (indtastes)
+
     case "SET_TICKET_TYPE":
       //here extract the prop from payload
       const { ticketType } = action.payload;
@@ -200,9 +209,11 @@ function reducer(state, action) {
       };
     case "CREATE_ATTENDEE_STRUCTURE":
       let attendees = [];
+      // fortæller at vi skal skubbe object ind i array for hver gang 
       //run through ticketAmount to get correct personal Info tabs loaded
       for (let i = 0; i < state.formData.ticketAmount; i++) {
         attendees.push({ fullname: "", email: "", phone: "" });
+        //loop der kører når konstanten i er mindre end antallet af valgte tickets skal den skubbe et objekt op. 
       }
       return {
         ...state,
