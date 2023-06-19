@@ -30,6 +30,7 @@ export default function BookingDisplay({ data }) {
   const [currentStep, setCurrentStep] = useState(0);
 
   //kig efter hvilke step du er på, og derudfra vis/switch til denne component.
+  //expression er currentStep og det er valuen til current step der afgører hvilke expression (component der skal renderes)
   switch (currentStep) {
     case 1:
       return <PersonalInfo currentStepSetter={setCurrentStep} />;
@@ -37,9 +38,10 @@ export default function BookingDisplay({ data }) {
       return <FormPay currentStepSetter={setCurrentStep} />;
     case 3:
       return <Confirmation />;
+
+        //når staten currentStep er 0, som den er sat til fra start vises dette som er defaulten
     default:
       return (
-        //når staten currentStep er 0, som den er sat til fra start vises dette som er defaulten.
         <>
           <Head>
             <title>Booking</title>

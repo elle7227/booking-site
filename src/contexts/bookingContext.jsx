@@ -29,7 +29,6 @@ const initialState = {
     tents2: 0,
     tents3: 0,
     id: "",
-
     ticketPrice: 0,
   },
 };
@@ -39,20 +38,23 @@ const initialState = {
 function reducer(state, action) {
   console.log(action);
   switch (action.action) {
+    
+    //TAGER FIELD VALUES FRA PAYLOAD (INDTASTEDE DATA) OG OPDATERER TILSVARENDE FELT I FORMDATA OBJECTET MED SATETEN
     case "UPDATE_FIELD":
       return {
-        //bryder dataen ned med ... til hver lille state der findes i dataen
+        //bryder dataen ned med ... til hver lille state der findes og kloner denne så den bliver immutable
         ...state,
         formData: {
           ...state.formData,
-          //læser feltet og opdatere værdien dynamisk. field og value skal defineres i 
+          //læser feltet og opdatere værdien dynamisk. field og value skal defineres når casen anvnedes.
           [action.payload.field]: action.payload.value,
         },
       };
-      //PAYLOAD er den data der modtages (indtastes)
+      //PAYLOAD er den data der modtages/sendes (indtastes)
 
+      //TAGER TICKETTYPE VÆRDI FRA PAYLOAD, UDREGNER TICKETPRICE PÅBAGGRUND AF TYPE. OG OPDATERE TYPE OG PRICE I FORMDATA SATEN.
     case "SET_TICKET_TYPE":
-      //here extract the prop from payload
+      //tager ticket type fra payload (indtastede data)
       const { ticketType } = action.payload;
       //modify payload based on choice and then insert into global state, chatgpt helped
       const ticketPrice = calculateTicketPrice(
@@ -63,6 +65,10 @@ function reducer(state, action) {
         state.formData.tents2,
         state.formData.tents3
       );
+
+    // ticketprice bruges til at opdatere formdata property af  state objectet.
+    // ... laver shallow object af state object og af state.formdata for at ændringer ikke påvirker føtidligere states.
+    // vi skal sammneligne om der er ændringer i nye states (payload) for at vores reducer funktion virker.
       return {
         ...state,
         formData: {

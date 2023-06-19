@@ -11,7 +11,7 @@ import { formDataContext } from "@/contexts/bookingContext";
 
 
 export default function MainTicket({ spotData, currentStepSetter }) {
-  //state til at pbne og lukke en lille infoboks ved tent set up
+  //state til at åbne og lukke en lille infoboks ved tent set up
   const [open, setOpen] = useState(false);
 
   //fortæller at vi skal bruge useContext (vores context) - context call on the parent
